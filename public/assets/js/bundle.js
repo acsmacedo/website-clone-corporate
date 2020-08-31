@@ -15434,6 +15434,743 @@ module.exports = g;
 
 /***/ }),
 
+/***/ "./src/frame/js/body/accordion.js":
+/*!****************************************!*\
+  !*** ./src/frame/js/body/accordion.js ***!
+  \****************************************/
+/*! exports provided: accordion */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "accordion", function() { return accordion; });
+// ********************************************* version 1.0.0
+function accordion() {
+  const accordionNames = getComputedStyle(document.documentElement).getPropertyValue('--accordion');
+  if (accordionNames) { 
+    const accordionOptionsList = getComputedStyle(document.documentElement).getPropertyValue('--accordion-options');
+    const accordionOptions = accordionOptionsList.trim().split(', ');
+    const accordionList = document.querySelectorAll(accordionNames);
+    
+    for (let i = 0; i < accordionList.length; i++) {
+      for (let j =0; j < accordionList[i].children.length; j++) {
+        accordionList[i].children[j].children[1].classList.add('hide');
+        
+        if (accordionOptions[i].includes('open')) {
+          accordionList[i].children[0].children[1].classList.remove('hide');
+          accordionList[i].children[0].setAttribute('data-active', 'true');
+        }
+  
+        accordionList[i].children[j].children[0].addEventListener('click', function() {
+          if(accordionOptions[i].includes('single')) {
+            for (let k = 0; k < accordionList[i].children.length; k++) {
+              if (k != j) {
+                accordionList[i].children[k].children[1].classList.add('hide');
+                accordionList[i].children[k].removeAttribute('data-active');
+              }
+            }
+  
+            accordionList[i].children[j].hasAttribute('data-active') ?
+            accordionList[i].children[j].removeAttribute('data-active') :
+            accordionList[i].children[j].setAttribute('data-active', 'true');
+  
+            accordionList[i].children[j].children[1].classList.toggle('hide');
+          } else {
+            accordionList[i].children[j].hasAttribute('data-active') ?
+            accordionList[i].children[j].removeAttribute('data-active') :
+            accordionList[i].children[j].setAttribute('data-active', 'true');
+  
+            accordionList[i].children[j].children[1].classList.toggle('hide');
+            
+          }
+        })
+      } 
+    }
+  }
+}
+
+/***/ }),
+
+/***/ "./src/frame/js/body/carousel.js":
+/*!***************************************!*\
+  !*** ./src/frame/js/body/carousel.js ***!
+  \***************************************/
+/*! exports provided: carousel */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "carousel", function() { return carousel; });
+// ********************************************* version 1.0.0
+function carousel() {
+  const carouselNames = getComputedStyle(document.documentElement).getPropertyValue('--carousel');
+  if (carouselNames) { 
+    const carouselList = document.querySelectorAll(carouselNames);
+
+    for (let i = 0; i < carouselList.length; i++) {
+      let carouselItems = carouselList[i].children[0].children;
+      let itemWidth = carouselItems[0].offsetWidth;
+      let itemPosition = [];
+  
+      let navAll = document.createElement('div');
+  
+      for (let j = 0; j < carouselItems.length; j++) {
+        let navItem = document.createElement('div');
+        navAll.appendChild(navItem);
+  
+        itemPosition.push(j * (itemWidth + 16));
+      }
+  
+      for (let j = 0; j < carouselItems.length; j++) {
+        carouselItems[j].style.left = itemPosition[j] + 'px';
+      }
+  
+      carouselList[i].children[0].style.height = carouselItems[0].offsetHeight + 'px';
+      
+      let nav = document.createElement('nav');
+      
+      let controlsNext = document.createElement('div');
+      let controlsPrev = document.createElement('div');
+      nav.appendChild(controlsPrev);
+      nav.appendChild(navAll);
+      nav.appendChild(controlsNext);
+      carouselList[i].appendChild(nav);
+  
+      let btnPrev = carouselList[i].children[1].children[0];
+      let btnNext = carouselList[i].children[1].children[2];
+      
+      btnPrev.addEventListener('click', function() {
+        itemPosition.push(itemPosition.shift());
+        
+        for (let j = 0; j < carouselItems.length; j++) {
+          carouselItems[j].style.left = itemPosition[j] + 'px';
+          carouselActive(j);
+        }
+  
+        for (let y = 0; y < btnItems.length; y++) {
+          btnItems[y].removeAttribute('data-active');
+          if(carouselItems[y].style.left == '0px') {
+            btnItems[y].setAttribute('data-active', 'true');
+          }
+        }
+      })
+  
+      btnNext.addEventListener('click', function() {
+        itemPosition.unshift(itemPosition.pop());
+        
+        for (let j = 0; j < carouselItems.length; j++) {
+          carouselItems[j].style.left = itemPosition[j] + 'px';
+        }
+  
+        for (let y = 0; y < btnItems.length; y++) {
+          btnItems[y].removeAttribute('data-active');
+          if(carouselItems[y].style.left == '0px') {
+            btnItems[y].setAttribute('data-active', 'true');
+          }
+        }
+      })
+  
+      let btnItems = carouselList[i].children[1].children[1].children;
+      btnItems[0].setAttribute('data-active', 'true');
+  
+      for (let j = 0; j < carouselItems.length; j++) {
+        btnItems[j].addEventListener('click', function() {
+          itemPosition = [];
+          for (let k = 0; k < carouselItems.length; k++) {
+            itemPosition.push(k * (itemWidth + 16));
+          }
+          for (let k = 0; k < j; k++) {
+            itemPosition.unshift(itemPosition.pop());
+          }
+          for (let k = 0; k < carouselItems.length; k++) {
+            carouselItems[k].style.left = itemPosition[k] + 'px';
+          }
+          carouselActive(j);
+        })
+      }
+  
+      let carouselActive = function (index) {
+        for (let y = 0; y < btnItems.length; y++) {
+          btnItems[y].removeAttribute('data-active');
+        }
+        if(carouselItems[index].style.left == '0px') {
+          btnItems[index].setAttribute('data-active', 'true');
+        }
+      }
+    }
+  }
+}
+
+/***/ }),
+
+/***/ "./src/frame/js/body/menu-colapse-sidebar.js":
+/*!***************************************************!*\
+  !*** ./src/frame/js/body/menu-colapse-sidebar.js ***!
+  \***************************************************/
+/*! exports provided: menuColapseSidebar */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "menuColapseSidebar", function() { return menuColapseSidebar; });
+// ********************************************* version 1.0.0
+function menuColapseSidebar() {
+  const menu = getComputedStyle(document.documentElement).getPropertyValue('--menu-colapse-sidebar');
+  const menuOptions = getComputedStyle(document.documentElement).getPropertyValue('--menu-colapse-sidebar-options');
+
+  if (menu) {
+    const menuList = document.querySelectorAll(menu);
+    const optionsList = menuOptions.trim().split(', ');
+    
+    menuList.forEach((el, i) => { 
+      const icon = document.createElement('div');
+      const overlay = document.createElement('div');
+      const close = document.createElement('div');
+      //const triggerClose = document.getElementsByClassName('menu-colapse-trigger');
+      //const triggerStop = document.getElementsByClassName('menu-colapse-trigger');
+      
+      const content = el.firstElementChild;
+      const contentClone = content.cloneNode(true);
+      
+      const options = optionsList[i].split(' ');
+      const optionsWidth = Number(options[0].slice(0, (options[0].length)-2));
+      const optionsSide = 'menu-side-' + options[1];
+      
+      icon.classList.add('menu-colapse-icon');
+      el.appendChild(icon);
+
+      overlay.classList.add('menu-colapse-overlay');
+      document.body.insertAdjacentElement('afterbegin', overlay);
+
+      close.classList.add('menu-colapse-close');
+      contentClone.insertAdjacentElement('afterbegin', close);
+      
+      contentClone.classList.add('menu-colapse-content');
+      contentClone.classList.add(optionsSide);
+      contentClone.classList.add('hide');
+      document.body.insertAdjacentElement('afterbegin', contentClone);
+
+      icon.addEventListener('click', function() {
+        overlay.style.display = 'flex';
+        contentClone.classList.remove('hide');
+      })
+
+      overlay.addEventListener('click', function() {
+        overlay.style.display = 'none';
+        contentClone.classList.add('hide');
+      })
+
+      close.addEventListener('click', function() {
+        overlay.style.display = 'none';
+        contentClone.classList.add('hide');
+      })
+      /*
+      contentClone.addEventListener('click', function() {
+        overlay.style.display = 'none';
+        contentClone.classList.add('hide');
+      })
+      
+      if (triggerStop.length > 0) {
+        for(let i = 0; i <triggerStop.length; i++) {
+          triggerStop[i].addEventListener('click', function(e) {
+            e.stopPropagation();
+          })
+        }
+      }
+      */
+      /*
+      if (triggerClose.length > 0) {
+        for(let i = 0; i <triggerClose.length; i++) {
+          triggerClose[i].addEventListener('click', function() {
+            overlay.style.display = 'none';
+            contentClone.classList.add('hide');
+          })
+        }
+      }
+      */
+      window.addEventListener('load', function() {
+        if (optionsWidth <= window.innerWidth) {
+          icon.style.display = 'none';
+          contentClone.style.display = 'none';
+          content.style.display = 'flex';
+        }
+      })
+      
+      window.addEventListener('resize', function() {
+        if (optionsWidth <= window.innerWidth) {
+          overlay.style.display = 'none';
+          contentClone.classList.add('hide');
+          contentClone.style.display = 'none';
+          icon.style.display = 'none';
+          content.style.display = 'flex';
+        } else {
+          contentClone.style.display = 'flex';
+          icon.style.display = 'flex';
+          content.style.display = 'none';
+        }
+      })
+    })
+  }
+}
+
+
+/***/ }),
+
+/***/ "./src/frame/js/body/modal.js":
+/*!************************************!*\
+  !*** ./src/frame/js/body/modal.js ***!
+  \************************************/
+/*! exports provided: modal, openModal */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "modal", function() { return modal; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "openModal", function() { return openModal; });
+// ********************************************* version 1.0.0
+function modal() { 
+  const target = getComputedStyle(document.documentElement).getPropertyValue('--modal');
+
+  if (target) {
+    const targetList = document.querySelectorAll(target);
+    
+    targetList.forEach(el => {
+      const overlay = document.createElement('div');
+      const close = document.createElement('div');
+      
+      el.style.display = 'flex';
+      el.classList.add('hide');
+      overlay.classList.add('menu-modal-overlay');
+      el.insertAdjacentElement('beforeend', overlay);
+
+      close.classList.add('menu-modal-close');
+      el.firstElementChild.firstElementChild.insertAdjacentElement('afterbegin', close);
+
+      close.addEventListener('click', function() {
+        el.classList.add('hide');
+      })
+
+      overlay.addEventListener('click', function() {
+        el.classList.add('hide');
+      })
+
+      window.addEventListener('resize', function() {
+        changeHeight(el);
+      })
+      
+      window.addEventListener('load', function() {
+        changeHeight(el);
+      })
+    })
+  }
+}
+
+
+function openModal() {
+  const target = getComputedStyle(document.documentElement).getPropertyValue('--open-modal');
+  const targetOptions = getComputedStyle(document.documentElement).getPropertyValue('--open-modal-options');
+
+  if (target) {
+    const btn = target.trim().split(', ');
+    const modal = targetOptions.trim().split(', ');
+    
+    for (let i = 0;i < btn.length; i++) {
+      const btnItem = document.querySelectorAll(btn[i]);
+      const modalItem = document.querySelector(modal[i]);
+      
+      btnItem.forEach(el => {
+        el.addEventListener('click', function() {
+          modalItem.classList.remove('hide');
+          changeScroll(modalItem);
+        })
+      })
+    }
+  }
+}
+
+
+function changeHeight(el) {
+  const children = el.firstElementChild.children;
+  const firstHeight = children[1] ? children[0].clientHeight : 0;
+  const content = children[1] ? children[1] : children[0];
+  const lastHeight = children[2] ? children[2].clientHeight : 0;
+  
+  const windowHeight = window.innerHeight;
+  const maxHeight = windowHeight - firstHeight - lastHeight - 36;
+  content.style.maxHeight = maxHeight + 'px';
+}
+
+
+function changeScroll(el) {
+  const children = el.firstElementChild.children;
+  const content = children[1] ? children[1] : children[0];
+  const contentScroll = content.scrollHeight;
+  const contentHeight = content.clientHeight;
+  
+  if(contentScroll > contentHeight) {
+    content.style.overflowY = 'scroll';
+  } else {
+    content.style.overflowY = 'hidden';
+  }
+}
+
+
+/***/ }),
+
+/***/ "./src/frame/js/body/scroll-down.js":
+/*!******************************************!*\
+  !*** ./src/frame/js/body/scroll-down.js ***!
+  \******************************************/
+/*! exports provided: scrollDown */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "scrollDown", function() { return scrollDown; });
+// ********************************************* version 1.0.0
+function scrollDown() {
+  const target = getComputedStyle(document.documentElement).getPropertyValue('--scroll-down');
+  const targetOptions = getComputedStyle(document.documentElement).getPropertyValue('--scroll-down-options');
+  
+  if (target) { 
+    const targetList = document.querySelectorAll(target);
+    const targetOptionsList = targetOptions.trim().split(', ');
+    
+    targetList.forEach((el, i) => { 
+      el.addEventListener('click', function() {
+        const margin = Number(targetOptionsList[i]);
+        window.scrollTo(0, (window.innerHeight + margin));
+      })
+    })
+  }
+}
+
+
+/***/ }),
+
+/***/ "./src/frame/js/body/scroll-progress.js":
+/*!**********************************************!*\
+  !*** ./src/frame/js/body/scroll-progress.js ***!
+  \**********************************************/
+/*! exports provided: scrollProgress */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "scrollProgress", function() { return scrollProgress; });
+// ********************************************* version 1.0.0
+function scrollProgress() {
+  const target = getComputedStyle(document.documentElement).getPropertyValue('--scroll-progress');
+  const targetOptions = getComputedStyle(document.documentElement).getPropertyValue('--scroll-progress-options');
+
+  if (target) { 
+    const targetList = document.querySelectorAll(target);
+    const targetOptionsList = targetOptions.trim().split(', ');
+    
+    targetList.forEach((el, i) => { 
+      const progress = document.createElement('div');
+      const progressActive = document.createElement('div');
+      const child = el.firstElementChild;
+
+      progress.appendChild(progressActive);
+      progress.classList.add('scroll-progress');
+      el.insertAdjacentElement('afterbegin', progress);
+
+      if (targetOptionsList[i].includes('window')) {
+        window.addEventListener('scroll', function() {
+          const total = document.querySelector('body').scrollHeight - window.innerHeight;
+          const width = window.scrollY * 100 / total;
+          progressActive.style.width = width + '%';
+        })
+      } else {
+        child.addEventListener('scroll', function(e) {
+          const total = child.scrollHeight - child.clientHeight;
+          const width = e.target.scrollTop * 100 / total;
+          progressActive.style.width = width + '%';
+        })
+      }
+    })
+  }
+}
+
+
+/***/ }),
+
+/***/ "./src/frame/js/body/scroll-up.js":
+/*!****************************************!*\
+  !*** ./src/frame/js/body/scroll-up.js ***!
+  \****************************************/
+/*! exports provided: scrollUp */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "scrollUp", function() { return scrollUp; });
+// ********************************************* version 1.0.0
+function scrollUp() {
+  const target = getComputedStyle(document.documentElement).getPropertyValue('--scroll-up');
+  const targetOptions = getComputedStyle(document.documentElement).getPropertyValue('--scroll-up-options');
+  
+  if (target) {
+    const targetList = document.querySelectorAll(target);
+    const targetOptionsList = targetOptions.trim().split(',');
+    
+    targetList.forEach((el, i) => { 
+      const margin = targetOptionsList[i].trim();
+      
+      el.addEventListener('click', function() {
+        window.scrollTo(0, 0);
+      })
+      
+      if (margin != "") {
+        el.style.display = 'none';
+        
+        document.addEventListener('scroll', function() {
+          if (window.scrollY >= (window.innerHeight + Number(margin))) {
+            el.style.display = 'flex';
+          } else {
+            el.style.display = 'none';
+          }
+        })
+      }
+    })
+  }
+}
+
+
+/***/ }),
+
+/***/ "./src/frame/js/body/tab.js":
+/*!**********************************!*\
+  !*** ./src/frame/js/body/tab.js ***!
+  \**********************************/
+/*! exports provided: tab */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "tab", function() { return tab; });
+// ********************************************* version 1.0.0
+function tab() {
+  const tabNames = getComputedStyle(document.documentElement).getPropertyValue('--tab');
+  if (tabNames) { 
+    const tabList = document.querySelectorAll(tabNames);
+
+    tabList.forEach( tab => {
+      let tabBtn = tab.children[0].children;
+      let tabText = tab.children[1].children;
+      
+      for (let i = 0; i < tabBtn.length; i++) {
+        let id = '_' + Math.random().toString(36).substr(2, 9);
+        tabBtn[i].setAttribute('data-target', '#' + id);
+        tabText[i].id = id;
+        
+        tabText[i].classList.add('hide');
+        tabText[0].classList.remove('hide');
+        tabBtn[0].setAttribute('data-active', 'true');
+  
+        tabBtn[i].addEventListener('click', function(event) {
+          event.preventDefault();
+          for (let j = 0; j < tabText.length; j++) {
+            if(tabBtn[j].hasAttributes('data-active')) {
+              tabText[j].classList.add('hide');
+              tabBtn[j].removeAttribute('data-active');
+            }
+          }
+          tabText[i].classList.remove('hide');
+          tabBtn[i].setAttribute('data-active', 'true');
+        })
+      }
+    })
+  }
+}
+
+/***/ }),
+
+/***/ "./src/frame/js/body/tooltips.js":
+/*!***************************************!*\
+  !*** ./src/frame/js/body/tooltips.js ***!
+  \***************************************/
+/*! exports provided: tooltips */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "tooltips", function() { return tooltips; });
+// ********************************************* version 1.0.0
+function tooltips() { 
+  const target = getComputedStyle(document.documentElement).getPropertyValue('--tooltips');
+  const targetOptions = getComputedStyle(document.documentElement).getPropertyValue('--tooltips-options');
+
+  if (target) { 
+    const targetList = document.querySelectorAll(target);
+    const targetOptionsList = targetOptions.trim().split(', ');
+    
+    targetList.forEach((el, i) => {
+      const child = el.firstElementChild;
+      const heightChild = child.clientHeight;
+      child.classList.add('hide');
+
+      if (targetOptionsList[i].includes('click')) {
+        el.addEventListener('click', function(e) {
+          const position = 'tooltips-' + bestPosition(e.target, e.target.firstElementChild);
+          
+          child.classList.remove('tooltips-right', 'tooltips-left', 'tooltips-top', 'tooltips-bottom');
+          child.style.removeProperty('top');
+          child.style.removeProperty('bottom');
+          child.style.removeProperty('right');
+          child.style.removeProperty('left');
+          
+          positionValue(position, el, child, heightChild);
+          child.classList.add(position);
+          child.classList.toggle('hide');
+
+          el.hasAttribute('data-active') ? 
+          el.removeAttribute('data-active'): 
+          el.setAttribute('data-active', 'true');
+        })
+      } 
+      
+      if (targetOptionsList[i].includes('over')){
+        el.addEventListener('mouseenter', function(e) {
+          const position = 'tooltips-' + bestPosition(e.target, e.target.firstElementChild);
+
+          positionValue(position, el, child, heightChild);
+          child.classList.add(position);
+          child.classList.toggle('hide');
+        })
+  
+        el.addEventListener('mouseleave', function() {
+          child.classList.add('hide');
+          child.classList.remove('tooltips-right', 'tooltips-left', 'tooltips-top', 'tooltips-bottom');
+          child.style.removeProperty('top');
+          child.style.removeProperty('bottom');
+          child.style.removeProperty('right');
+          child.style.removeProperty('left');
+        })
+      }
+
+      if (targetOptionsList[i].includes('stop')) {
+        child.addEventListener('click', function(e) { 
+          e.stopPropagation();
+        })
+      } else {
+        child.addEventListener('click', function(e) {
+          e.stopPropagation();
+          child.classList.add('hide');
+          child.classList.remove('tooltips-right', 'tooltips-left', 'tooltips-top', 'tooltips-bottom');
+          child.style.removeProperty('top');
+          child.style.removeProperty('bottom');
+          child.style.removeProperty('right');
+          child.style.removeProperty('left');
+          el.removeAttribute('data-active');
+        })
+      }
+    })
+  }
+}
+
+
+function positionValue(position, element, child, heightChild) {
+  const widthElement = element.clientWidth;
+  const heightElement = element.clientHeight;
+  const widthChild = child.clientWidth;
+  
+  if(position == 'tooltips-top' || position == 'tooltips-bottom') {
+    const diff = (widthElement - widthChild) / 2;
+    child.style.left = diff + 'px';
+  }
+
+  if(position == 'tooltips-left' || position == 'tooltips-right') {
+    const diff = (heightElement - heightChild) / 2;
+    child.style.top = diff + 'px';
+  }
+}
+
+
+function bestPosition(element, child) {
+  const widthWindow = window.innerWidth;
+  const heightWindow = window.innerHeight;
+  const widthElement = element.clientWidth;
+  const heightElement = element.clientHeight;
+  const widthChild = child.clientWidth;
+  const heightChild = child.clientHeight;
+  
+  const top = element.offsetTop - window.scrollY;
+  const bottom = heightWindow - heightElement - top;
+  const left = element.offsetLeft;
+  const right = widthWindow - widthElement - left + 2;
+
+  const diffTop = top - heightChild;
+  const diffBottom = bottom - heightChild;
+  const diffLeft = left - widthChild;
+  const diffRight = right - widthChild;
+  
+  const obj = { diffTop, diffBottom, diffRight, diffLeft };
+  const array = [ diffTop, diffBottom, diffRight, diffLeft ];
+  
+  const big = Math.max(...array);
+  
+  for (const key in obj) {
+    if (obj[key] == big) {
+      return key.slice(4).toLocaleLowerCase();
+    }
+  }
+}
+
+
+/***/ }),
+
+/***/ "./src/frame/js/frame.js":
+/*!*******************************!*\
+  !*** ./src/frame/js/frame.js ***!
+  \*******************************/
+/*! exports provided: tab, accordion, carousel, scrollUp, scrollDown, scrollProgress, menuColapseSidebar, tooltips, modal, openModal */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _body_tab_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./body/tab.js */ "./src/frame/js/body/tab.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "tab", function() { return _body_tab_js__WEBPACK_IMPORTED_MODULE_0__["tab"]; });
+
+/* harmony import */ var _body_accordion_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./body/accordion.js */ "./src/frame/js/body/accordion.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "accordion", function() { return _body_accordion_js__WEBPACK_IMPORTED_MODULE_1__["accordion"]; });
+
+/* harmony import */ var _body_carousel_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./body/carousel.js */ "./src/frame/js/body/carousel.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "carousel", function() { return _body_carousel_js__WEBPACK_IMPORTED_MODULE_2__["carousel"]; });
+
+/* harmony import */ var _body_scroll_up_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./body/scroll-up.js */ "./src/frame/js/body/scroll-up.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "scrollUp", function() { return _body_scroll_up_js__WEBPACK_IMPORTED_MODULE_3__["scrollUp"]; });
+
+/* harmony import */ var _body_scroll_down_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./body/scroll-down.js */ "./src/frame/js/body/scroll-down.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "scrollDown", function() { return _body_scroll_down_js__WEBPACK_IMPORTED_MODULE_4__["scrollDown"]; });
+
+/* harmony import */ var _body_scroll_progress_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./body/scroll-progress.js */ "./src/frame/js/body/scroll-progress.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "scrollProgress", function() { return _body_scroll_progress_js__WEBPACK_IMPORTED_MODULE_5__["scrollProgress"]; });
+
+/* harmony import */ var _body_menu_colapse_sidebar_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./body/menu-colapse-sidebar.js */ "./src/frame/js/body/menu-colapse-sidebar.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "menuColapseSidebar", function() { return _body_menu_colapse_sidebar_js__WEBPACK_IMPORTED_MODULE_6__["menuColapseSidebar"]; });
+
+/* harmony import */ var _body_tooltips_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./body/tooltips.js */ "./src/frame/js/body/tooltips.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "tooltips", function() { return _body_tooltips_js__WEBPACK_IMPORTED_MODULE_7__["tooltips"]; });
+
+/* harmony import */ var _body_modal_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./body/modal.js */ "./src/frame/js/body/modal.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "modal", function() { return _body_modal_js__WEBPACK_IMPORTED_MODULE_8__["modal"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "openModal", function() { return _body_modal_js__WEBPACK_IMPORTED_MODULE_8__["openModal"]; });
+
+
+
+
+
+
+
+
+
+
+
+/***/ }),
+
 /***/ "./src/frame/js/script.js":
 /*!********************************!*\
   !*** ./src/frame/js/script.js ***!
@@ -15447,13 +16184,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_stable__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_stable__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
 /* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _frame_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./frame.js */ "./src/frame/js/frame.js");
 // importação obrigatória para o web-pack
 
 
 
 // importação dos componentes do frame
 
-
+Object(_frame_js__WEBPACK_IMPORTED_MODULE_2__["carousel"])();
+Object(_frame_js__WEBPACK_IMPORTED_MODULE_2__["menuColapseSidebar"])();
+Object(_frame_js__WEBPACK_IMPORTED_MODULE_2__["tab"])();
 // My scripts
 
 
