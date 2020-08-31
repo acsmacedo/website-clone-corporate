@@ -1,7 +1,394 @@
 @use 'body' as *;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap');
 
 // *********************************************************** MY CSS
+body {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  transition-property: color, background-color;
+  transition-duration: 0.5s;
+}
 
+h2 {
+  color: #30314F;
+  font-size: 2.5em;
+  font-weight: 700;
+}
+
+h5 {
+  color: #30314F;
+  font-weight: 700;
+  font-size: 1.2em;
+  margin-bottom: 1rem;
+}
+
+p {
+  color: #838383;
+  line-height: 1.6em;
+  letter-spacing: 0.07em;
+}
+
+button {
+  background-color: #4362FE;
+  border: none;
+  outline: none;
+  padding: 1rem 2rem;
+  color: #FFFFFF;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.7em;
+  letter-spacing: 0.2em;
+  border-radius: 0.3em;
+  &:hover {
+    background-color: #2342DE;
+  }
+}
+
+.header {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  background-image: url("../img/slide.jpg");
+  min-height: 100vh;
+  &__container {
+    @include func-row(g-xl);
+    @media (min-width: func-container(sm)) {
+      flex-direction: row;
+    }
+  }
+  &__title {
+    @include func-col(md-8);
+    text-align: center;
+
+    align-content: center;
+    @media (min-width: func-container(sm)) {
+      flex-direction: row;
+      justify-content: center;
+    }
+    @media (min-width: func-container(md)) {
+      text-align: left;
+      justify-content: flex-start;
+    }
+    h1 {
+      color: #FFFFFF;
+      font-size: 3em;
+      font-weight: 700;
+      max-width: 600px;
+    }
+    p {
+      color: #FFFFFF;
+      max-width: 600px;
+      margin: 1rem 0;
+    }
+    button {
+      margin-bottom: 1rem;
+      @media (min-width: func-container(sm)) {
+        margin-right: 1rem;
+      }
+
+    }
+    button:first-of-type {
+      background-color: #FFFFFF;
+      color: #30314F;
+    }
+    button:last-of-type {
+      background-color: transparent;
+      color: #FFFFFF;
+      border: 0.0625rem solid #FFFFFF;
+    }
+  }
+  &__form {
+    @include func-col(md-4);
+    background-color: #FFFFFF;
+    padding: 3rem;
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    input {
+      width: 100%;
+      border: 0.0625rem solid #CCCCCC;
+      padding: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    select {
+      width: 100%;
+      border: 0.0625rem solid #CCCCCC;
+      padding: 1rem;
+    }
+    span {
+      margin: 1rem 0;
+    }
+  }
+}
+
+
+.service {
+  padding-top: 5rem;
+  &__container {
+    @include func-row(g-xl);
+    @media (min-width: func-container(sm)) {
+      flex-direction: row;
+    }
+  }
+  &__title {
+    text-align: center;
+    margin-bottom: 1rem;
+    @include func-col(sm-12);
+    h2 {
+      max-width: 600px;
+      margin: 1rem auto;
+    }
+  }
+  &__body {
+    flex-direction: row;
+    border-bottom: 0.0625rem solid #E0E3FD;
+    padding-bottom: 5rem;
+  }
+  &__text {
+    @include func-col(sm-6, lg-3);
+    text-align: center;
+    padding: 1rem 2rem;
+    @media (min-width: func-container(lg)) {
+      padding: 0 2rem;
+    }
+    div {
+      font-size: 2.5em;
+      width: 5rem;
+      height: 5rem;
+      border-radius: 50%;
+      background-color: #F0F3FD;
+      color: #4362FE;
+      justify-content: center;
+      align-items: center;
+      align-self: center;
+      margin-bottom: 1rem;
+      &:hover {
+        background-color: #4362FE;
+        color: #FFFFFF;
+      }
+    }
+  }
+}
+
+
+.about {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  &__container {
+    @include func-row(g-xl);
+    @media (min-width: func-container(sm)) {
+      flex-direction: row;
+    }
+  }
+  &__img {
+    @include func-col(sm-6, md-4);
+    img {
+      max-width: 250px;
+      margin: 0 auto;
+      @media (min-width: func-container(sm)) {
+        max-width: inherit;
+        margin: inherit;
+      }
+    }
+  }
+  &__text {
+    @include func-col(sm-6, md-8);
+    text-align: center;
+    justify-content: center;
+    margin-top: 2rem;
+    @media (min-width: func-container(sm)) {
+      text-align: left;
+      padding: 0 1rem 0 2rem;
+      margin-top: 0;
+    }
+    @media (min-width: func-container(lg)) {
+      padding: 0 4rem;
+    }
+    @media (min-width: func-container(xl)) {
+      padding: 0 8rem;
+    }
+    h2 {
+      margin-bottom: 2rem;
+      margin-top: 0.5rem;
+    }
+    button {
+      margin-top: 2rem;
+      @media (min-width: func-container(sm)) {
+        align-self: flex-start;
+      }
+    }
+  }
+}
+
+
+.whyus {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  &__container {
+    @include func-row(g-xl);
+    @media (min-width: func-container(md)) {
+      flex-direction: row-reverse;
+    }
+  }
+  &__img {
+    @include func-col(md-6, lg-4);
+    img {
+      max-width: 250px;
+      margin: 0 auto;
+      @media (min-width: func-container(md)) {
+        max-width: inherit;
+        margin: inherit;
+      }
+    }
+  }
+  &__text {
+    @include func-col(md-6, lg-8);
+    flex-direction: row;
+    text-align: center;
+    align-content: center;
+    margin-top: 2rem;
+    @media (min-width: func-container(md)) {
+      text-align: left;
+      padding: 0 2rem 0 0;
+      margin-top: 0;
+    }
+  }
+  &__title {
+    margin-bottom: 1rem;
+    @include func-col(sm-12);
+    h2 {
+      margin-bottom: 0.5rem;
+      margin-top: 0.5rem;
+    }
+  }
+  &__body {
+    @include func-col(sm-6);
+    padding: 1rem;
+    @media (min-width: func-container(md)) {
+      padding: 1rem 2rem 1rem 0;
+    }
+  }
+  
+}
+
+.testimonials {
+  width: 100%;
+  height: 500px;
+  background-color: #838383;
+}
+
+
+.price {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  &__container {
+    @include func-row(g-sm);
+    text-align: center;
+  }
+  table {
+    margin: 2rem 0 1rem 0;
+    thead {
+      font-weight: 700;
+      color: #30314F;
+    }
+    tbody {
+      color: #838383;
+      tr:nth-child(odd) {
+        background-color: #F0F3FD;
+      }
+    }
+    td {
+      text-align: center;
+      padding: 0.5rem 0;
+    }
+  }
+  button {
+    @media (min-width: func-container(sm)) {
+      align-self: stretch;
+    }
+  }
+}
+
+
+.form {
+  background-image: url("../img/hire-us.jpg");
+  background-size: cover;
+  background-position: left;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  @media (min-width: func-container(md)) {
+    background-position: center;
+  }
+  &__container {
+    @include func-row(g-md);
+  }
+  h2, p {
+    color: #FFFFFF;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  button {
+    align-self: center;
+    margin-top: 0.5rem;
+  }
+}
+
+
+.footer {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  &__container {
+    @include func-row(g-xl);
+    @media (min-width: func-container(sm)) {
+      flex-direction: row;
+    }
+  }
+  &__about {
+    @include func-col(md-6);
+    img {
+      max-width: 222px;
+    }
+    p {
+      margin-top: 1rem;
+      @media (min-width: func-container(md)) {
+        max-width: 350px;
+      }
+    }
+    span {
+      font-size: 0.8em;
+    }
+  }
+  &__links {
+    @include func-col(sm-4, md-2);
+    margin-top: 2rem;
+    @media (min-width: func-container(md)) {
+      margin-top: 0;
+    }
+    li {
+      color: #838383;
+      padding: 0.5rem 0;
+    }
+    a:hover {
+      color: #4362FE;
+    }
+    div {
+      font-size: 1.3em;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      background-color: #E0E3FD;
+      color: #4362FE;
+      justify-content: center;
+      align-items: center;
+      margin-right: 1rem;
+      display: inline-flex;
+      &:hover {
+        background-color: #4362FE;
+        color: #FFFFFF;
+      }
+    }
+  }
+}
 
 // *********************************************************** VARIAVEIS JS
 @include func-extend-components($func-extend-components);

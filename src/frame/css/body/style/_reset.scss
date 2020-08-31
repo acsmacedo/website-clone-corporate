@@ -24,6 +24,7 @@ article, main, div, footer {
   flex-direction: column;
   flex-wrap: wrap;
   overflow: hidden;
+  transition: inherit;
 }
 
 h1, h2, h3, h4, h5, h6, p, pre,
@@ -37,6 +38,7 @@ a, span {
   color: inherit;
   list-style: none;
   text-decoration: inherit;
+  transition: inherit;
 }
 
 table, thead, tbody, tfoot,
@@ -50,4 +52,8 @@ tr, th, td {
 img {
   width: 100%;
   object-fit: cover;
+}
+
+button {
+  transition: inherit;
 }

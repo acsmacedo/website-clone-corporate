@@ -1,0 +1,212 @@
+@use '../body' as *;
+
+/* *********************************************************** MODULE - START */
+
+.btn-down-1 {
+  @include comp-scroll-down;
+}
+ 
+
+.btn-down-2 {
+  @include comp-scroll-down(100);
+}
+
+.btn-down-3 {
+  @include comp-scroll-down(10);
+}
+
+.btn-up-1 {
+  @include comp-scroll-up(10);
+  position: fixed;
+  bottom: 3rem;
+  right: 3rem;
+}
+
+.btn-up-2 {
+  @include comp-scroll-up;
+  position: fixed;
+  bottom: 3rem;
+  right: 4rem;
+}
+
+.btn-up-3 {
+  @include comp-scroll-up(100);
+  position: fixed;
+  bottom: 3rem;
+  right: 5rem;
+}
+
+
+.scroll-progre {
+  @include comp-scroll-progress(window);
+}
+.pro {
+  @include func-row(g-sm);
+  height: 200px;
+  @include comp-scroll-progress(element);
+}
+
+.modal {
+  @include comp-modal;
+}
+
+.modal-2 {
+  @include comp-modal;
+}
+
+.modal-3 {
+  @include comp-modal;
+}
+.menu {
+  @include func-row(g-xl);
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+ 
+  .colapse-a {
+    @include comp-menu-colapse-sidebar(right);
+    
+    div {
+      flex-direction: row;
+      ul {
+        display: flex;
+        a {
+          padding: 0.5rem 0 0.5rem 1rem;
+        }
+      }
+    }  
+  }
+
+  .colapse-b {
+    @include comp-menu-colapse-sidebar(left);
+    
+    div {
+      flex-direction: row;
+      ul {
+        display: flex;
+        a {
+          padding: 0.5rem 0 0.5rem 1rem;
+        }
+      }
+    }  
+  }
+
+  .colapse-c {
+    @include comp-menu-colapse-sidebar(top);
+    
+    div {
+      flex-direction: row;
+      ul {
+        display: flex;
+        a {
+          padding: 0.5rem 0 0.5rem 1rem;
+        }
+      }
+    }  
+  }
+
+  .colapse-d {
+    @include comp-menu-colapse-sidebar(bottom);
+    div {
+      flex-direction: row;
+      ul {
+        display: flex;
+        a {
+          padding: 0.5rem 0 0.5rem 1rem;
+        }
+      }
+    }  
+  }
+}
+
+.teste-pop {
+  @include func-row(g-xl);
+  span {
+    @include comp-tooltips($mode: text);
+  }
+  
+}
+
+.sec-a {
+  height: 100vh;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  background-color: #CCC;
+  display: flex;
+  .a {
+    @include comp-tooltips;
+    background-color: red;
+    height: 80px;
+    width: 300px;
+  }
+  .b {
+    @include comp-tooltips;
+    background-color: blue;
+    height: 150px;
+    width: 80px;
+  }
+  .c {
+    @include comp-tooltips;
+    background-color: green;
+    width: 450px;
+    height: 230px;
+  }
+  .d {
+    @include comp-tooltips;
+    background-color: orange;
+    width: 450px;
+    height: 45px;
+    //@include comp-menu-colapse-sidebar;
+  }
+}
+
+.sec-b {
+  height: 100vh;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  background-color: #CCC;
+  display: flex;
+  .a {
+    @include comp-tooltips($width: 40rem);
+    background-color: red;
+    height: 80px;
+    width: 300px;
+  }
+  .b {
+    @include comp-tooltips($width: 5rem);
+    background-color: blue;
+    height: 150px;
+    width: 80px;
+  }
+  .c {
+    @include comp-tooltips;
+    background-color: green;
+    width: 450px;
+    height: 230px;
+  }
+  .d {
+    @include comp-tooltips;
+    background-color: orange;
+    width: 450px;
+    height: 45px;
+    //@include comp-menu-colapse-sidebar;
+  }
+}
+
+.active-modal {
+  @include comp-open-modal('.modal');
+}
+
+.active-modal-a {
+  @include comp-open-modal('.modal-2');
+}
+
+.active-modal-b {
+  @include comp-open-modal('.modal-3');
+}
+
+.active-modal-c {
+  @include comp-open-modal('.modal');
+}
