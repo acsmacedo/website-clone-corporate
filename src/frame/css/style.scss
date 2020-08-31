@@ -90,7 +90,7 @@ button {
 
 
 .menu {
-  padding: 1rem;
+  padding: 0 1rem;
   position: fixed;
   background-color: #FFFFFF;
   width: 100%;
@@ -98,6 +98,7 @@ button {
     @include func-row(g-xl);
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     margin: 0 auto;
   }
   &__logo {
@@ -109,17 +110,20 @@ button {
     display: flex;
     flex-direction: row;
     align-content: center;
+    height: 60px;
     @include comp-menu-colapse-sidebar;
     a {
-      padding: 1rem;
+      padding: 0.5rem 1rem;
       font-size: 0.7em;
       text-transform: uppercase;
       letter-spacing: 0.1em;
       &:hover {
         color: #4362FE;
       }
-      &:active {
+      &[data-correct='active'][data-active='active']  {
         font-weight: 700;
+        
+        border-bottom: 0.0625rem solid #4362FE;
       }
     }
     .menu-colapse-icon {
@@ -142,9 +146,30 @@ button {
 }
 
 
+.btn-scroll-up {
+  @include comp-scroll-up(0);
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background-color: #E0E3FD;
+  border-radius: 50%;
+  color: #4362FE;
+  &:hover {
+    background-color: #4362FE;
+    color: #FFFFFF;
+  }
+  i {
+    font-size: 2em;
+    padding: 0.3rem;
+  }
+}
+
 .header {
-  background-image: url("../img/slide.jpg");
-  min-height: 100vh;
+  background-image: linear-gradient(rgba(1, 35, 203, 0.8), rgba(1, 35, 203, 0.8)) , url("../img/header.jpg");
+  background-position: bottom;
+  background-size: cover;
+  min-height: calc(100vh + 30px);
+  justify-content: flex-end;
   &__title {
     @include func-col(md-8);
     text-align: center;
@@ -296,7 +321,9 @@ button {
 
 
 .numbers {
-  background-image: url("../img/slide.jpg");  
+  background-image: linear-gradient(rgba(1, 35, 203, 0.8), rgba(1, 35, 203, 0.8)) , url("../img/numbers.jpg");
+  background-position: center;
+  background-size: cover;  
   &__container {
     @include func-row(g-xl);
   }
@@ -456,7 +483,7 @@ button {
 
 
 .form {
-  background-image: url("../img/hire-us.jpg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),url("../img/hire-us.jpg");
   background-size: cover;
   background-position: center;
   &__container {

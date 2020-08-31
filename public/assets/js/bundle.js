@@ -16194,8 +16194,36 @@ __webpack_require__.r(__webpack_exports__);
 Object(_frame_js__WEBPACK_IMPORTED_MODULE_2__["carousel"])();
 Object(_frame_js__WEBPACK_IMPORTED_MODULE_2__["menuColapseSidebar"])();
 Object(_frame_js__WEBPACK_IMPORTED_MODULE_2__["tab"])();
-// My scripts
+Object(_frame_js__WEBPACK_IMPORTED_MODULE_2__["scrollUp"])();
 
+// My scripts
+const links = document.querySelectorAll('.menu__links a');
+
+links.forEach(el => {
+  const href = el.getAttribute('href');
+  const element = document.querySelector(href);
+  const height = element.offsetTop;
+  
+  window.addEventListener('scroll', function() {
+    if (height <= window.scrollY) {
+      el.setAttribute('data-active', 'active');
+    } else {
+      el.removeAttribute('data-active');
+    }
+
+    const active = document.querySelectorAll('.menu__links a[data-active]');
+   
+    active.forEach((el, i) => {
+      if (i == (active.length - 1)) {
+        el.setAttribute('data-correct', 'active');
+      } else {
+        el.removeAttribute('data-correct');
+      }
+    })
+  })
+
+  
+})
 
 /***/ })
 
