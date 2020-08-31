@@ -1,0 +1,8 @@
+@use 'body' as *;
+
+// *********************************************************** MY CSS
+
+
+// *********************************************************** VARIAVEIS JS
+@include func-extend-components($func-extend-components);
+@if $comp-menu-colapse-used { body { @extend %menu-colapse-sidebar; } }
