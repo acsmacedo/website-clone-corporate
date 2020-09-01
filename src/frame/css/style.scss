@@ -1,0 +1,584 @@
+@use 'body' as *;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap');
+
+// *********************************************************** MY CSS
+body {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  transition-property: color, background-color, opacity;
+  transition-duration: 0.5s;
+}
+
+section, footer, header {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+h2 {
+  color: #30314F;
+  font-size: 2.5em;
+  font-weight: 700;
+}
+
+h5 {
+  color: #30314F;
+  font-weight: 700;
+  font-size: 1.2em;
+}
+
+p {
+  color: #838383;
+  line-height: 1.6em;
+  letter-spacing: 0.07em;
+}
+
+button {
+  background-color: #4362FE;
+  border: none;
+  outline: none;
+  padding: 1rem 2rem;
+  color: #FFFFFF;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.7em;
+  letter-spacing: 0.2em;
+  border-radius: 0.3em;
+  transition-property: color, background-color, opacity;
+  transition-duration: 0.5s;
+  &:hover {
+    background-color: #2342DE;
+  }
+}
+
+
+.footer, .header, .service, .about {
+  &__container {
+    @include func-row(g-xl);
+    @media (min-width: func-container(sm)) {
+      flex-direction: row;
+    }
+  }
+}
+
+.service, .numbers, .whyus, .price {
+  &__title {
+    text-align: center;
+    margin-bottom: 1rem;
+    @include func-col(sm-12);
+    h2 {
+      max-width: 600px;
+      margin: 0.5rem auto 1rem auto;
+    }
+  }
+}
+
+.footer, .service {
+  &__icon {
+    border-radius: 50%;
+    background-color: #E0E3FD;
+    color: #4362FE;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    display: inline-flex;
+    &:hover {
+      background-color: #4362FE;
+      color: #FFFFFF;
+    }
+  }
+}
+
+
+.menu {
+  padding: 0 1rem;
+  position: fixed;
+  background-color: #FFFFFF;
+  width: 100%;
+  z-index: 10;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+  &__container {
+    @include func-row(g-xl);
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+  }
+  &__logo {
+    a {
+      display: flex;
+      align-items: center;
+    }
+    img {
+      max-width: 180px;
+    }
+  }
+  &__linkss {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    height: 60px;
+    @include comp-menu-colapse-sidebar;
+    @include comp-scroll-spy;
+    a {
+      padding: 0.5rem 1rem;
+      font-size: 0.7em;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      &:hover {
+        color: #4362FE;
+      }
+      &[data-correct='active'][data-active='active']  {
+        font-weight: 700;
+        border-bottom: 0.0625rem solid #4362FE;
+      }
+    }
+    .menu-colapse-icon {
+      font-family: 'Times New Roman', Times, serif;
+    }
+  }
+}
+
+.menu-colapse-content {
+  display: flex;
+  flex-direction: column;
+  li {
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 0.0625rem solid #E0E3FD;
+  }
+}
+
+
+.header {
+  background-image: linear-gradient(rgba(1, 35, 203, 0.8), rgba(1, 35, 203, 0.8)) , url("../img/header.jpg");
+  background-position: bottom;
+  background-size: cover;
+  min-height: calc(100vh + 30px);
+  justify-content: flex-end;
+  &__title {
+    @include func-col(md-8);
+    text-align: center;
+    align-content: center;
+    margin-bottom: 4rem;
+    @media (min-width: func-container(sm)) {
+      flex-direction: row;
+      justify-content: center;
+    }
+    @media (min-width: func-container(md)) {
+      text-align: left;
+      justify-content: flex-start;
+      margin-bottom: 0;
+    }
+    h1 {
+      color: #FFFFFF;
+      font-size: 3em;
+      font-weight: 700;
+      max-width: 600px;
+      span {
+        text-decoration: #FFFFFF underline;
+      }
+    }
+    p {
+      color: #FFFFFF;
+      max-width: 600px;
+      margin: 1rem 0;
+    }
+    button {
+      margin-bottom: 1rem;
+      @media (min-width: func-container(sm)) {
+        margin-right: 1rem;
+      }
+    }
+    button:first-of-type {
+      background-color: rgba(255, 255, 255, 1);
+      color: #30314F;
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.7);
+      }
+    }
+    button:last-of-type {
+      background-color: transparent;
+      color: #FFFFFF;
+      border: 0.0625rem solid rgba(255, 255, 255, 0.5);
+      padding-right: 1.5rem;
+      align-items: center;
+      i {
+        font-size: 1.2em;
+        margin-left: 0.5rem;
+      }
+      &:hover {
+        border: 0.0625rem solid rgba(255, 255, 255, 1);
+      }
+    }
+  }
+  &__form {
+    @include func-col(sm-12, md-4);
+    background-color: #FFFFFF;
+    padding: 1rem;
+    @media (min-width: func-container(lg)) {
+      padding: 3rem;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    h5 {
+      margin-bottom: 2rem;
+    }
+    input {
+      width: 100%;
+      border: 0.0625rem solid #CCCCCC;
+      padding: 1rem;
+      margin-bottom: 0.5rem;
+      border-radius: 0.3em;
+      outline: none;
+      transition: border-color 0.5s;
+      &:hover, &:focus {
+        border-color: #838383;
+      }
+    }
+    span {
+      margin: 1rem 0;
+      font-size: 0.8em;
+    }
+  }
+}
+
+
+.service {
+  &__body {
+    flex-direction: row;
+  }
+  &__text {
+    @include func-col(sm-6, lg-3);
+    text-align: center;
+    padding: 1rem 2rem;
+    margin-top: 1rem;
+    @media (min-width: func-container(lg)) {
+      padding: 0 2rem;
+    }
+    h5 {
+      margin: 1rem 0;
+    }
+    i {
+      font-size: 2.5em;
+      padding: 1.25rem;
+    }
+  }
+}
+
+
+.about {
+  background-color: #E0E3FD;
+  &__img {
+    @include func-col(sm-6, md-4);
+    img {
+      max-width: 250px;
+      margin: 0 auto;
+      @media (min-width: func-container(sm)) {
+        max-width: inherit;
+        margin: inherit;
+      }
+    }
+  }
+  &__text {
+    @include func-col(sm-6, md-8);
+    text-align: center;
+    justify-content: center;
+    margin-top: 2rem;
+    @media (min-width: func-container(sm)) {
+      text-align: left;
+      padding: 0 1rem 0 2rem;
+      margin-top: 0;
+    }
+    @media (min-width: func-container(lg)) {
+      padding: 0 2rem 0 4rem;
+    }
+    @media (min-width: func-container(xl)) {
+      padding: 0 4rem 0 8rem;
+    }
+    h2 {
+      margin: 0.5rem 0 2rem 0;
+    }
+    button {
+      margin-top: 2rem;
+      display: flex;
+      padding-right: 1.5rem;
+      align-items: center;
+      i {
+        font-size: 1.2em;
+        margin-left: 0.5rem;
+      }
+      @media (min-width: func-container(sm)) {
+        align-self: flex-start;
+      }
+    }
+  }
+}
+
+
+.numbers {
+  background-image: linear-gradient(rgba(1, 35, 203, 0.8), rgba(1, 35, 203, 0.8)) , url("../img/numbers.jpg");
+  background-position: center;
+  background-size: cover;  
+  &__container {
+    @include func-row(g-xl);
+  }
+  &__title {
+    h2, p {
+      color: #FFFFFF;
+    }
+  }
+  &__body {
+    background-color: #FFFFFF;
+    @media (min-width: func-container(md)) {
+      flex-direction: row;
+    }
+  }
+  &__text {
+    @include func-col(md-4);
+    padding: 3rem 2rem;
+    align-content: center;
+    text-align: center;
+    justify-content: center;
+    border-bottom: 0.0625rem solid #E0E3FD;
+    &:last-child {
+      border-bottom: none;
+    }
+    @media (min-width: func-container(md)) {
+      border-bottom: none;
+      border-right: 0.0625rem solid #E0E3FD;
+      &:last-child {
+        border-right: none;
+      }
+    }
+    span {
+      color: #4362FE;
+      font-size: 4rem;
+      font-weight: 700;
+    }
+    div {
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      i {
+        color: #838383;
+        font-size: 1.5em;
+        margin-right: 0.5rem;
+      }
+      p {
+        font-weight: 400;
+      }
+    }
+    &__project {
+      @include comp-increment-numbers(652);
+    }
+    &__coffee {
+      @include comp-increment-numbers(5568);
+    }
+    &__code {
+      @include comp-increment-numbers(526585);
+    }
+  }
+}
+
+
+.whyus {
+  &__container {
+    @include func-row(g-xl);
+    @media (min-width: func-container(md)) {
+      flex-direction: row-reverse;
+    }
+  }
+  &__img {
+    @include func-col(md-6, lg-4);
+    img {
+      max-width: 250px;
+      margin: 0 auto;
+      @media (min-width: func-container(md)) {
+        max-width: inherit;
+        margin: inherit;
+      }
+    }
+  }
+  &__text {
+    @include func-col(md-6, lg-8);
+    flex-direction: row;
+    text-align: center;
+    align-content: center;
+    margin-top: 2rem;
+    @media (min-width: func-container(md)) {
+      text-align: left;
+      padding: 0 2rem 0 0;
+      margin-top: 0;
+    }
+  }
+  &__title {
+    @media (min-width: func-container(md)) {
+      text-align: left;
+      h2 {
+        margin: 0.5rem 0 1rem 0;
+      }
+    }
+  }
+  &__body {
+    @include func-col(sm-6);
+    padding: 1rem;
+    @media (min-width: func-container(md)) {
+      padding: 1rem 2rem 1rem 0;
+    }
+  }
+}
+
+
+.testimonials {
+  background-color: #E0E3FD;
+  &__container {
+    @include func-row(g-md);
+    @include comp-tab(box);
+    flex-direction: column-reverse;
+    & > :first-child {
+      align-self: center;
+      margin-top: 1rem;
+      & > * {
+        padding: 0.2rem 1rem;
+      }
+    }
+  }
+  &__item {
+    text-align: center;
+    align-items: center;
+    img {
+      max-width: 120px;
+      border-radius: 50%;
+    }
+    p {
+      margin: 1.5rem 0;
+      position: relative;
+      padding: 0 3rem;   
+      &::before {
+        content: '\201C';
+        font-size: 7em;
+        color: #4362FE;
+        opacity: 0.2;
+        font-family: Arial, Helvetica, sans-serif;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      &::after {
+        content: '\201D';
+        font-size: 7em;
+        color: #4362FE;
+        opacity: 0.2;
+        font-family: Arial, Helvetica, sans-serif;
+        position: absolute;
+        bottom: -2.5rem;
+        right: 0;
+      }
+    }
+  }
+}
+
+
+.price {
+  &__container {
+    @include func-row(g-sm);
+  }
+  table {
+    margin: 0 0 1rem 0;
+    thead {
+      font-weight: 700;
+      color: #30314F;
+    }
+    tbody {
+      color: #838383;
+      tr:nth-child(odd) {
+        background-color: #E0E3FD;
+      }
+    }
+    td {
+      text-align: center;
+      padding: 0.5rem 0;
+    }
+  }
+  button {
+    @media (min-width: func-container(sm)) {
+      align-self: stretch;
+    }
+  }
+}
+
+
+.form {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),url("../img/hire-us.jpg");
+  background-size: cover;
+  background-position: center;
+  &__container {
+    @include func-row(g-md);
+  }
+  h2, p {
+    color: #FFFFFF;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  button {
+    align-self: center;
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    padding-right: 1.5rem;
+    i {
+      font-size: 1.2em;
+      margin-left: 0.5rem;
+    }
+  }
+}
+
+
+.footer {
+  &__about {
+    @include func-col(md-6);
+    img {
+      max-width: 222px;
+    }
+    p {
+      margin-top: 1rem;
+      @media (min-width: func-container(md)) {
+        max-width: 350px;
+      }
+    }
+    span {
+      font-size: 0.8em;
+    }
+  }
+  &__links {
+    @include func-col(sm-4, md-2);
+    margin-top: 2rem;
+    @media (min-width: func-container(md)) {
+      margin-top: 0;
+    }
+    h5 {
+      margin-bottom: 1rem;
+    }
+    li > a {
+      color: #838383;
+      padding: 0.5rem 0;
+      display: inline-flex;
+      &:hover {
+        color: #4362FE;
+      }
+    }
+    div {
+      margin: 0.5rem 0.5rem 0 0;
+    }
+    i {
+      font-size: 1.3em;
+      padding: 0.7rem;
+    }
+  }
+}
+
+// *********************************************************** VARIAVEIS JS
+@include func-extend-components($func-extend-components);
+@if $comp-menu-colapse-used { body { @extend %menu-colapse-sidebar; } }
