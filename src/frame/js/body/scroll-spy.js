@@ -12,7 +12,7 @@ export function scrollSpy() {
         const href = el.getAttribute('href');
         const element = document.querySelector(href);
         const height = element.offsetTop;
-        
+
         window.addEventListener('scroll', function() {
           change(elem, el, height)
         })
