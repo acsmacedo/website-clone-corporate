@@ -15603,6 +15603,68 @@ function carousel() {
 
 /***/ }),
 
+/***/ "./src/frame/js/body/increment-numbers.js":
+/*!************************************************!*\
+  !*** ./src/frame/js/body/increment-numbers.js ***!
+  \************************************************/
+/*! exports provided: incrementNumbers */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "incrementNumbers", function() { return incrementNumbers; });
+// ********************************************* version 1.0.0
+function incrementNumbers() {
+  const target = getComputedStyle(document.documentElement).getPropertyValue('--increment-numbers');
+  const targetOptions = getComputedStyle(document.documentElement).getPropertyValue('--increment-numbers-options');
+
+  if (target) {
+    const targetList = document.querySelectorAll(target);
+    const targetOptionsList = targetOptions.trim().split(',');
+
+    targetList.forEach((el, i) => {
+      const number = Number(targetOptionsList[i].trim());
+      let initial = 0;
+      const interval = Math.ceil(number / 100);
+      
+      el.innerHTML = 0;
+
+      const myLoop = function() {           
+        let time = setTimeout(function() {   
+          el.innerHTML = initial;
+                             
+          if (initial <= number) { 
+            if ((initial + interval) > number) {
+              initial += (Math.ceil((number - initial) / 10))
+            } else {
+              initial += interval; 
+            }          
+            myLoop();             
+          }
+        }, 100)
+
+        if (initial == number) {
+          clearTimeout(time);
+        }
+      }
+
+      window.addEventListener('scroll', function() {
+        const height = el.offsetTop;
+        if (height <= (window.scrollY + window.innerHeight - (window.innerHeight * 0.2))) {
+          myLoop();
+          console.log(height);
+        } else {
+          el.innerHTML = 0;
+          initial = 0;
+        }
+      })
+    })
+  }
+}
+
+
+/***/ }),
+
 /***/ "./src/frame/js/body/menu-colapse-sidebar.js":
 /*!***************************************************!*\
   !*** ./src/frame/js/body/menu-colapse-sidebar.js ***!
@@ -15664,12 +15726,12 @@ function menuColapseSidebar() {
         overlay.style.display = 'none';
         contentClone.classList.add('hide');
       })
-      /*
+      
       contentClone.addEventListener('click', function() {
         overlay.style.display = 'none';
         contentClone.classList.add('hide');
       })
-      
+      /*
       if (triggerStop.length > 0) {
         for(let i = 0; i <triggerStop.length; i++) {
           triggerStop[i].addEventListener('click', function(e) {
@@ -15891,6 +15953,66 @@ function scrollProgress() {
       }
     })
   }
+}
+
+
+/***/ }),
+
+/***/ "./src/frame/js/body/scroll-spy.js":
+/*!*****************************************!*\
+  !*** ./src/frame/js/body/scroll-spy.js ***!
+  \*****************************************/
+/*! exports provided: scrollSpy */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "scrollSpy", function() { return scrollSpy; });
+// ********************************************* version 1.0.0
+function scrollSpy() { 
+  const target = getComputedStyle(document.documentElement).getPropertyValue('--scroll-spy');
+
+  if (target) {
+    const targetList = document.querySelectorAll(target);
+
+    targetList.forEach((elem) => { 
+      const links = elem.querySelectorAll('a');
+      
+      links.forEach((el) => {
+        const href = el.getAttribute('href');
+        const element = document.querySelector(href);
+        const height = element.offsetTop;
+        
+        window.addEventListener('scroll', function() {
+          change(elem, el, height)
+        })
+      
+        window.addEventListener('load', function() {
+          change(elem, el, height)
+        })
+        
+      })
+    })
+  }
+}
+
+
+function change(elem, el, height) {
+  const active = elem.querySelectorAll('a[data-active]');
+
+  if (height <= window.scrollY) {
+    el.setAttribute('data-active', 'active');
+  } else {
+    el.removeAttribute('data-active');
+  }
+
+  active.forEach((el, i) => {
+    if (i == (active.length - 1)) {
+      el.setAttribute('data-correct', 'active');
+    } else {
+      el.removeAttribute('data-correct');
+    }
+  })
 }
 
 
@@ -16125,7 +16247,7 @@ function bestPosition(element, child) {
 /*!*******************************!*\
   !*** ./src/frame/js/frame.js ***!
   \*******************************/
-/*! exports provided: tab, accordion, carousel, scrollUp, scrollDown, scrollProgress, menuColapseSidebar, tooltips, modal, openModal */
+/*! exports provided: tab, accordion, carousel, scrollUp, scrollDown, scrollSpy, scrollProgress, menuColapseSidebar, tooltips, modal, openModal, incrementNumbers */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16145,19 +16267,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _body_scroll_down_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./body/scroll-down.js */ "./src/frame/js/body/scroll-down.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "scrollDown", function() { return _body_scroll_down_js__WEBPACK_IMPORTED_MODULE_4__["scrollDown"]; });
 
-/* harmony import */ var _body_scroll_progress_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./body/scroll-progress.js */ "./src/frame/js/body/scroll-progress.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "scrollProgress", function() { return _body_scroll_progress_js__WEBPACK_IMPORTED_MODULE_5__["scrollProgress"]; });
+/* harmony import */ var _body_scroll_spy_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./body/scroll-spy.js */ "./src/frame/js/body/scroll-spy.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "scrollSpy", function() { return _body_scroll_spy_js__WEBPACK_IMPORTED_MODULE_5__["scrollSpy"]; });
 
-/* harmony import */ var _body_menu_colapse_sidebar_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./body/menu-colapse-sidebar.js */ "./src/frame/js/body/menu-colapse-sidebar.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "menuColapseSidebar", function() { return _body_menu_colapse_sidebar_js__WEBPACK_IMPORTED_MODULE_6__["menuColapseSidebar"]; });
+/* harmony import */ var _body_scroll_progress_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./body/scroll-progress.js */ "./src/frame/js/body/scroll-progress.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "scrollProgress", function() { return _body_scroll_progress_js__WEBPACK_IMPORTED_MODULE_6__["scrollProgress"]; });
 
-/* harmony import */ var _body_tooltips_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./body/tooltips.js */ "./src/frame/js/body/tooltips.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "tooltips", function() { return _body_tooltips_js__WEBPACK_IMPORTED_MODULE_7__["tooltips"]; });
+/* harmony import */ var _body_menu_colapse_sidebar_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./body/menu-colapse-sidebar.js */ "./src/frame/js/body/menu-colapse-sidebar.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "menuColapseSidebar", function() { return _body_menu_colapse_sidebar_js__WEBPACK_IMPORTED_MODULE_7__["menuColapseSidebar"]; });
 
-/* harmony import */ var _body_modal_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./body/modal.js */ "./src/frame/js/body/modal.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "modal", function() { return _body_modal_js__WEBPACK_IMPORTED_MODULE_8__["modal"]; });
+/* harmony import */ var _body_tooltips_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./body/tooltips.js */ "./src/frame/js/body/tooltips.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "tooltips", function() { return _body_tooltips_js__WEBPACK_IMPORTED_MODULE_8__["tooltips"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "openModal", function() { return _body_modal_js__WEBPACK_IMPORTED_MODULE_8__["openModal"]; });
+/* harmony import */ var _body_modal_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./body/modal.js */ "./src/frame/js/body/modal.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "modal", function() { return _body_modal_js__WEBPACK_IMPORTED_MODULE_9__["modal"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "openModal", function() { return _body_modal_js__WEBPACK_IMPORTED_MODULE_9__["openModal"]; });
+
+/* harmony import */ var _body_increment_numbers_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./body/increment-numbers.js */ "./src/frame/js/body/increment-numbers.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "incrementNumbers", function() { return _body_increment_numbers_js__WEBPACK_IMPORTED_MODULE_10__["incrementNumbers"]; });
+
+
 
 
 
@@ -16191,38 +16321,17 @@ __webpack_require__.r(__webpack_exports__);
 
 // importação dos componentes do frame
 
-Object(_frame_js__WEBPACK_IMPORTED_MODULE_2__["carousel"])();
 Object(_frame_js__WEBPACK_IMPORTED_MODULE_2__["menuColapseSidebar"])();
 Object(_frame_js__WEBPACK_IMPORTED_MODULE_2__["tab"])();
-Object(_frame_js__WEBPACK_IMPORTED_MODULE_2__["scrollUp"])();
+Object(_frame_js__WEBPACK_IMPORTED_MODULE_2__["scrollSpy"])();
+Object(_frame_js__WEBPACK_IMPORTED_MODULE_2__["incrementNumbers"])();
 
 // My scripts
-const links = document.querySelectorAll('.menu__links a');
-
-links.forEach(el => {
-  const href = el.getAttribute('href');
-  const element = document.querySelector(href);
-  const height = element.offsetTop;
-  
-  window.addEventListener('scroll', function() {
-    if (height <= window.scrollY) {
-      el.setAttribute('data-active', 'active');
-    } else {
-      el.removeAttribute('data-active');
-    }
-
-    const active = document.querySelectorAll('.menu__links a[data-active]');
-   
-    active.forEach((el, i) => {
-      if (i == (active.length - 1)) {
-        el.setAttribute('data-correct', 'active');
-      } else {
-        el.removeAttribute('data-correct');
-      }
-    })
+let button = document.querySelectorAll('button');
+button.forEach( el => {
+  el.addEventListener('click', function(e) {
+    e.preventDefault();
   })
-
-  
 })
 
 /***/ })

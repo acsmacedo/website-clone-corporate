@@ -94,6 +94,8 @@ button {
   position: fixed;
   background-color: #FFFFFF;
   width: 100%;
+  z-index: 10;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
   &__container {
     @include func-row(g-xl);
     flex-direction: row;
@@ -102,16 +104,21 @@ button {
     margin: 0 auto;
   }
   &__logo {
+    a {
+      display: flex;
+      align-items: center;
+    }
     img {
-      max-width: 150px;
+      max-width: 180px;
     }
   }
-  &__links {
+  &__linkss {
     display: flex;
     flex-direction: row;
     align-content: center;
     height: 60px;
     @include comp-menu-colapse-sidebar;
+    @include comp-scroll-spy;
     a {
       padding: 0.5rem 1rem;
       font-size: 0.7em;
@@ -122,7 +129,6 @@ button {
       }
       &[data-correct='active'][data-active='active']  {
         font-weight: 700;
-        
         border-bottom: 0.0625rem solid #4362FE;
       }
     }
@@ -132,8 +138,6 @@ button {
   }
 }
 
-
-
 .menu-colapse-content {
   display: flex;
   flex-direction: column;
@@ -141,28 +145,9 @@ button {
     padding-bottom: 1rem;
     margin-bottom: 1rem;
     border-bottom: 0.0625rem solid #E0E3FD;
-
   }
 }
 
-
-.btn-scroll-up {
-  @include comp-scroll-up(0);
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  background-color: #E0E3FD;
-  border-radius: 50%;
-  color: #4362FE;
-  &:hover {
-    background-color: #4362FE;
-    color: #FFFFFF;
-  }
-  i {
-    font-size: 2em;
-    padding: 0.3rem;
-  }
-}
 
 .header {
   background-image: linear-gradient(rgba(1, 35, 203, 0.8), rgba(1, 35, 203, 0.8)) , url("../img/header.jpg");
@@ -205,19 +190,24 @@ button {
       }
     }
     button:first-of-type {
-      background-color: #FFFFFF;
+      background-color: rgba(255, 255, 255, 1);
       color: #30314F;
       &:hover {
-        opacity: 0.8;
+        background-color: rgba(255, 255, 255, 0.7);
       }
     }
     button:last-of-type {
       background-color: transparent;
       color: #FFFFFF;
-      border: 0.0625rem solid #FFFFFF;
-      opacity: 0.8;
+      border: 0.0625rem solid rgba(255, 255, 255, 0.5);
+      padding-right: 1.5rem;
+      align-items: center;
+      i {
+        font-size: 1.2em;
+        margin-left: 0.5rem;
+      }
       &:hover {
-        opacity: 1;
+        border: 0.0625rem solid rgba(255, 255, 255, 1);
       }
     }
   }
@@ -312,6 +302,13 @@ button {
     }
     button {
       margin-top: 2rem;
+      display: flex;
+      padding-right: 1.5rem;
+      align-items: center;
+      i {
+        font-size: 1.2em;
+        margin-left: 0.5rem;
+      }
       @media (min-width: func-container(sm)) {
         align-self: flex-start;
       }
@@ -372,6 +369,15 @@ button {
       p {
         font-weight: 400;
       }
+    }
+    &__project {
+      @include comp-increment-numbers(652);
+    }
+    &__coffee {
+      @include comp-increment-numbers(5568);
+    }
+    &__code {
+      @include comp-increment-numbers(526585);
     }
   }
 }
@@ -448,6 +454,28 @@ button {
     }
     p {
       margin: 1.5rem 0;
+      position: relative;
+      padding: 0 3rem;   
+      &::before {
+        content: '\201C';
+        font-size: 7em;
+        color: #4362FE;
+        opacity: 0.2;
+        font-family: Arial, Helvetica, sans-serif;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      &::after {
+        content: '\201D';
+        font-size: 7em;
+        color: #4362FE;
+        opacity: 0.2;
+        font-family: Arial, Helvetica, sans-serif;
+        position: absolute;
+        bottom: -2.5rem;
+        right: 0;
+      }
     }
   }
 }
@@ -497,6 +525,13 @@ button {
   button {
     align-self: center;
     margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    padding-right: 1.5rem;
+    i {
+      font-size: 1.2em;
+      margin-left: 0.5rem;
+    }
   }
 }
 
@@ -526,7 +561,7 @@ button {
     h5 {
       margin-bottom: 1rem;
     }
-    a {
+    li > a {
       color: #838383;
       padding: 0.5rem 0;
       display: inline-flex;
