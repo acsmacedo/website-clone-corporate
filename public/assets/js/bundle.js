@@ -15652,7 +15652,6 @@ function incrementNumbers() {
         const height = el.offsetTop;
         if (height <= (window.scrollY + window.innerHeight - (window.innerHeight * 0.2))) {
           myLoop();
-          console.log(height);
         } else {
           el.innerHTML = 0;
           initial = 0;
