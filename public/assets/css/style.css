@@ -386,6 +386,10 @@ button:hover {
     display: none;
   }
 }
+.menu__linkss li {
+  display: flex;
+  align-items: center;
+}
 .menu__linkss a {
   padding: 0.5rem 1rem;
   font-size: 0.7em;
@@ -399,7 +403,7 @@ button:hover {
   font-weight: 700;
   border-bottom: 0.0625rem solid #4362FE;
 }
-.menu__linkss .menu-colapse-icon {
+.menu__linkss .menu-colapse-icon::after {
   font-family: "Playfair Display", serif;
 }
 
@@ -412,13 +416,18 @@ button:hover {
   margin-bottom: 1rem;
   border-bottom: 0.0625rem solid #E0E3FD;
 }
+.menu-colapse-content .menu-colapse-close::after {
+  font-family: "Playfair Display", serif;
+}
 
 .header {
   background-image: linear-gradient(rgba(1, 35, 203, 0.8), rgba(1, 35, 203, 0.8)), url("../img/header.jpg");
   background-position: bottom;
   background-size: cover;
-  min-height: calc(100vh + 30px);
   justify-content: flex-end;
+}
+.header__container {
+  padding-top: 3rem;
 }
 .header__title {
   text-align: center;
@@ -436,6 +445,7 @@ button:hover {
     text-align: left;
     justify-content: flex-start;
     margin-bottom: 0;
+    align-self: flex-end;
   }
 }
 .header__title h1 {
@@ -737,6 +747,7 @@ button:hover {
 
 .price table {
   margin: 0 0 1rem 0;
+  width: 100%;
 }
 .price table thead {
   font-weight: 700;
@@ -780,6 +791,14 @@ button:hover {
   margin-left: 0.5rem;
 }
 
+.footer {
+  text-align: center;
+}
+@media (min-width: 576px) {
+  .footer {
+    text-align: left;
+  }
+}
 .footer__about img {
   max-width: 222px;
 }

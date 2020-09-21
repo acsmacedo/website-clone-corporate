@@ -120,6 +120,10 @@ button {
     height: 60px;
     @include comp-menu-colapse-sidebar;
     @include comp-scroll-spy;
+    li {
+      display: flex;
+      align-items: center;
+    }
     a {
       padding: 0.5rem 1rem;
       font-size: 0.7em;
@@ -134,7 +138,9 @@ button {
       }
     }
     .menu-colapse-icon {
-      font-family: 'Playfair Display', serif;
+      &::after {
+        font-family: 'Playfair Display', serif;
+      }
     }
   }
 }
@@ -147,6 +153,11 @@ button {
     margin-bottom: 1rem;
     border-bottom: 0.0625rem solid #E0E3FD;
   }
+  .menu-colapse-close {
+    &::after {
+      font-family: 'Playfair Display', serif;
+    }
+  }
 }
 
 
@@ -154,8 +165,11 @@ button {
   background-image: linear-gradient(rgba(1, 35, 203, 0.8), rgba(1, 35, 203, 0.8)) , url("../img/header.jpg");
   background-position: bottom;
   background-size: cover;
-  min-height: calc(100vh + 30px);
+  //min-height: calc(100vh + 30px);
   justify-content: flex-end;
+  &__container {
+    padding-top: 3rem;
+  }
   &__title {
     @include func-col(md-8);
     text-align: center;
@@ -169,6 +183,7 @@ button {
       text-align: left;
       justify-content: flex-start;
       margin-bottom: 0;
+      align-self: flex-end;
     }
     h1 {
       color: #FFFFFF;
@@ -489,6 +504,7 @@ button {
   }
   table {
     margin: 0 0 1rem 0;
+    width: 100%;
     thead {
       font-weight: 700;
       color: #30314F;
@@ -539,6 +555,10 @@ button {
 
 
 .footer {
+  text-align: center;
+  @media (min-width: func-container(sm)) {
+    text-align: left;
+  }
   &__about {
     @include func-col(md-6);
     img {
